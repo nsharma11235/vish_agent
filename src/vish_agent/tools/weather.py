@@ -65,9 +65,10 @@ def extract_arguments(tool: ToolSpec, current_text: str, combined_text: str) -> 
 TOOL_SPEC = ToolSpec(
     name="nws_weather_radio",
     description=(
-        "Fetches the current NOAA weather radio broadcast script for a "
-        "location and returns it as plain text. Requires latitude and "
-        "longitude."
+        "Fetches the current NOAA weather radio broadcast for a pair of "
+        "latitude/longitude coordinates and returns it as plain text. Use "
+        "this when the user asks about the weather, forecast, or sky "
+        "conditions at a place. Requires latitude and longitude."
     ),
     parameters=(
         ToolParameter(name="latitude", type=float, required=True, description="Latitude of the location."),

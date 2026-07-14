@@ -86,9 +86,9 @@
   {
     "id": "conversational_capital",
     "text": "What's the capital of France?",
-    "expected_tools": [],
-    "expected_arguments": null,
-    "notes": "Answerable from general knowledge; no tool should be selected."
+    "expected_tools": ["tavily_web_search"],
+    "expected_arguments": {"query": "What's the capital of France?"},
+    "notes": "Informational query: by design the agent grounds these with web search rather than answering from general knowledge."
   },
   {
     "id": "conversational_arithmetic",

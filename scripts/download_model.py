@@ -1,6 +1,7 @@
-"""Pre-downloads Qwen2.5-1.5B-Instruct into the local Hugging Face cache.
+"""Pre-downloads the configured model (VISH_MODEL_NAME, default
+Qwen2.5-1.5B-Instruct) into the local Hugging Face cache.
 
-Run this once while online. After that, QwenClient loads straight from
+Run this once while online. After that, LLMClient loads straight from
 cache with no network access required (see VISH_MODEL_LOCAL_FILES_ONLY
 in .env.example to make that a hard requirement).
 """

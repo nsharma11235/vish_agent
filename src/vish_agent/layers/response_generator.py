@@ -10,15 +10,15 @@ request_id, for experiment evaluation.
 from __future__ import annotations
 
 from vish_agent.config import RESPONSE_TEMPERATURE
-from vish_agent.llm.qwen_client import QwenClient
+from vish_agent.llm.client import LLMClient
 from vish_agent.logging_utils import TransactionLogger, default_logger
 from vish_agent.prompts import RESPONSE_GENERATION_PROMPT
 from vish_agent.schemas import FinalResponse, ToolResult, ToolSelection
 
 
 class ResponseGenerator:
-    def __init__(self, llm_client: QwenClient | None = None, logger: TransactionLogger = default_logger):
-        self.llm_client = llm_client or QwenClient.get_shared()
+    def __init__(self, llm_client: LLMClient | None = None, logger: TransactionLogger = default_logger):
+        self.llm_client = llm_client or LLMClient.get_shared()
         self.logger = logger
 
     def generate(self, tool_selection: ToolSelection, tool_result: ToolResult) -> FinalResponse:

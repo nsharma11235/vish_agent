@@ -9,10 +9,10 @@ from vish_agent.schemas import AggregateInput, ResponseType
 
 
 @pytest.fixture
-def logged_input_layer(qwen_client, tmp_path):
+def logged_input_layer(llm_client, tmp_path):
     log_path = tmp_path / "transactions.jsonl"
     logger = TransactionLogger(log_path)
-    layer = InputLayer(llm_client=qwen_client, logger=logger)
+    layer = InputLayer(llm_client=llm_client, logger=logger)
     return layer, log_path
 
 
@@ -63,9 +63,9 @@ def test_each_call_gets_a_unique_request_id(logged_input_layer):
     assert first.request_id != second.request_id
 
 
-def test_custom_system_prompt_is_used(qwen_client, tmp_path):
+def test_custom_system_prompt_is_used(llm_client, tmp_path):
     logger = TransactionLogger(tmp_path / "transactions.jsonl")
-    layer = InputLayer(llm_client=qwen_client, logger=logger, system_prompt="You are a pirate.")
+    layer = InputLayer(llm_client=llm_client, logger=logger, system_prompt="You are a pirate.")
 
     result = layer.process("Ahoy!")
     assert result.system_prompt == "You are a pirate."

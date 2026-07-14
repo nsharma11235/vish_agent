@@ -12,7 +12,7 @@ from __future__ import annotations
 from fuzzywuzzy import process as fuzzy_process
 
 from vish_agent.config import FUZZY_MATCH_THRESHOLD, ORCHESTRATOR_TEMPERATURE
-from vish_agent.llm.qwen_client import QwenClient
+from vish_agent.llm.client import LLMClient
 from vish_agent.logging_utils import TransactionLogger, default_logger
 from vish_agent.prompts import TOOL_SELECTION_PROMPT
 from vish_agent.schemas import AggregateInput, ToolSelection
@@ -23,12 +23,12 @@ from vish_agent.tools.registry import TOOLBOX
 class Orchestrator:
     def __init__(
         self,
-        llm_client: QwenClient | None = None,
+        llm_client: LLMClient | None = None,
         logger: TransactionLogger = default_logger,
         tools: dict[str, ToolSpec] | None = None,
         fuzzy_match_threshold: int = FUZZY_MATCH_THRESHOLD,
     ):
-        self.llm_client = llm_client or QwenClient.get_shared()
+        self.llm_client = llm_client or LLMClient.get_shared()
         self.logger = logger
         self.tools = tools if tools is not None else TOOLBOX
         self.fuzzy_match_threshold = fuzzy_match_threshold

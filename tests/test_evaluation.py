@@ -92,10 +92,10 @@ def test_grade_arguments_float_tolerance():
 
 
 @pytest.fixture
-def harness_and_results_path(qwen_client, tmp_path):
+def harness_and_results_path(llm_client, tmp_path):
     logger = TransactionLogger(tmp_path / "transactions.jsonl")
     results_path = tmp_path / "evaluation_results.jsonl"
-    pipeline = VishPipeline(llm_client=qwen_client, logger=logger, tools=TOOLBOX)
+    pipeline = VishPipeline(llm_client=llm_client, logger=logger, tools=TOOLBOX)
     return EvaluationHarness(pipeline, results_path=results_path), results_path
 
 

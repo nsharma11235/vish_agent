@@ -1,14 +1,14 @@
 """Input Layer: raw user text -> AggregateInput for the Orchestrator.
 
 Combines the raw text with the pre-written system prompt, then runs a
-lightweight classification pass through Qwen2.5-1.5B-Instruct to decide
+lightweight classification pass through the configured chat model to decide
 whether the request is conversational or needs a tool.
 """
 
 from __future__ import annotations
 
 from vish_agent.config import CLASSIFIER_TEMPERATURE
-from vish_agent.llm.qwen_client import QwenClient
+from vish_agent.llm.client import LLMClient
 from vish_agent.logging_utils import TransactionLogger, default_logger
 from vish_agent.prompts import RESPONSE_TYPE_CLASSIFIER_PROMPT, SYSTEM_PROMPT
 from vish_agent.schemas import AggregateInput, ResponseType, new_request_id
@@ -17,11 +17,11 @@ from vish_agent.schemas import AggregateInput, ResponseType, new_request_id
 class InputLayer:
     def __init__(
         self,
-        llm_client: QwenClient | None = None,
+        llm_client: LLMClient | None = None,
         logger: TransactionLogger = default_logger,
         system_prompt: str = SYSTEM_PROMPT,
     ):
-        self.llm_client = llm_client or QwenClient.get_shared()
+        self.llm_client = llm_client or LLMClient.get_shared()
         self.logger = logger
         self.system_prompt = system_prompt
 

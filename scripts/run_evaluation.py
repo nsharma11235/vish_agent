@@ -7,7 +7,7 @@ from __future__ import annotations
 
 from vish_agent.evaluation.dataset import load_labeled_prompts
 from vish_agent.evaluation.harness import EvaluationHarness
-from vish_agent.llm.qwen_client import QwenClient
+from vish_agent.llm.client import LLMClient
 from vish_agent.pipeline import VishPipeline
 from vish_agent.tools.registry import TOOLBOX
 
@@ -20,7 +20,7 @@ TOOLBOX_CONFIGURATIONS = [
 
 def main() -> None:
     prompts = load_labeled_prompts()
-    llm_client = QwenClient.get_shared()
+    llm_client = LLMClient.get_shared()
 
     for tools in TOOLBOX_CONFIGURATIONS:
         pipeline = VishPipeline(llm_client=llm_client, tools=tools)

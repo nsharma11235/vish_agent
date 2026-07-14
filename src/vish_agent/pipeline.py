@@ -12,7 +12,7 @@ from vish_agent.layers.input_layer import InputLayer
 from vish_agent.layers.orchestrator import Orchestrator
 from vish_agent.layers.response_generator import ResponseGenerator
 from vish_agent.layers.tool_executor import ToolExecutor
-from vish_agent.llm.qwen_client import QwenClient
+from vish_agent.llm.client import LLMClient
 from vish_agent.logging_utils import TransactionLogger, default_logger
 from vish_agent.schemas import FinalResponse
 from vish_agent.session import VishConversationSession, Turn
@@ -23,11 +23,11 @@ from vish_agent.tools.registry import TOOLBOX
 class VishPipeline:
     def __init__(
         self,
-        llm_client: QwenClient | None = None,
+        llm_client: LLMClient | None = None,
         logger: TransactionLogger = default_logger,
         tools: dict[str, ToolSpec] | None = None,
     ):
-        llm_client = llm_client or QwenClient.get_shared()
+        llm_client = llm_client or LLMClient.get_shared()
         tools = tools if tools is not None else TOOLBOX
 
         self.input_layer = InputLayer(llm_client=llm_client, logger=logger)

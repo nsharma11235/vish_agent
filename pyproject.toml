@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "vish-agent"
 version = "0.1.0"
-description = "Locally-run AI agent (Qwen2.5-1.5B-Instruct) for studying tool-selection accuracy as toolbox size grows."
+description = "Locally-run AI agent for studying tool-selection accuracy as toolbox size grows. Model set via VISH_MODEL_NAME (default Qwen2.5-1.5B-Instruct)."
 requires-python = ">=3.10"
 
 [tool.setuptools.packages.find]

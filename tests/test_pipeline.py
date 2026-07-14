@@ -10,9 +10,9 @@ from vish_agent.tools.registry import TOOLBOX
 
 
 @pytest.fixture
-def pipeline(qwen_client, tmp_path):
+def pipeline(llm_client, tmp_path):
     logger = TransactionLogger(tmp_path / "transactions.jsonl")
-    return VishPipeline(llm_client=qwen_client, logger=logger), logger.log_path
+    return VishPipeline(llm_client=llm_client, logger=logger), logger.log_path
 
 
 def test_pipeline_run_returns_final_response(pipeline):
@@ -37,10 +37,10 @@ def test_pipeline_run_writes_one_log_entry_per_layer(pipeline):
     assert all(r["request_id"] == result.request_id for r in records)
 
 
-def test_pipeline_accepts_custom_toolbox_size(qwen_client, tmp_path):
+def test_pipeline_accepts_custom_toolbox_size(llm_client, tmp_path):
     logger = TransactionLogger(tmp_path / "transactions.jsonl")
     single_tool = {"ip_api_geolocation": TOOLBOX["ip_api_geolocation"]}
-    vish = VishPipeline(llm_client=qwen_client, logger=logger, tools=single_tool)
+    vish = VishPipeline(llm_client=llm_client, logger=logger, tools=single_tool)
 
     vish.run("What's my IP address's location?")
 

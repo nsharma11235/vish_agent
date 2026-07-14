@@ -7,6 +7,12 @@
 transformers>=4.46
 torch
 accelerate
+# Tokenizer conversion for models that ship a slow/sentencepiece tokenizer
+# instead of tokenizer.json (Llama, Mistral, etc.) - needed since
+# VISH_MODEL_NAME makes the model swappable.
+sentencepiece
+tiktoken
+protobuf
 
 # Tool-name fuzzy matching (Orchestrator)
 fuzzywuzzy==0.18.0

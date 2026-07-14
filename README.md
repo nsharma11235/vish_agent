@@ -24,9 +24,9 @@ copy .env.example .env   # then fill in TAVILY_API_KEY
 pytest
 ```
 
-Tests load the real Qwen2.5-1.5B-Instruct model (no mocking), so the first
-run will download the model from Hugging Face and each test session will be
-slow to start.
+Tests load the real chat model (no mocking) — whichever `VISH_MODEL_NAME`
+selects, Qwen2.5-1.5B-Instruct by default — so the first run will download
+the model from Hugging Face and each test session will be slow to start.
 
 ## Architecture
 
@@ -35,7 +35,8 @@ Four modular layers (`src/vish_agent/layers/`): `input_layer.py` ->
 together in `pipeline.py`. Shared infrastructure: `config.py` (env/settings),
 `schemas.py` (data contracts between layers), `prompts.py` (prompt
 templates), `logging_utils.py` (structured JSONL transaction logging),
-`llm/qwen_client.py` (shared model wrapper), and `tools/` (toolbox metadata
+`llm/client.py` (model-agnostic shared model wrapper; the model is chosen
+via the `VISH_MODEL_NAME` env var), and `tools/` (toolbox metadata
 + implementations for IP-API geolocation, NWS weather, and Tavily search).
 
 The pipeline is called through plain Python objects/functions with no

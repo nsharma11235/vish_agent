@@ -43,11 +43,10 @@ TOOL_SPEC = ToolSpec(
     name="ip_api_geolocation",
     description=(
         "Looks up latitude, longitude, and other location data for an IP "
-        "address using the IP-API geolocation service. Omit the query to "
-        "look up the caller's own public IP. This does not find the coordinates "
-        "for a given location. This only finds the coordinates for a given IP address."
-        "Only use this tool if the user asks for the location of a specific IP address"
-        "or the user asks for their current location. Do not use this for other location queries."
+        "address using the IP-API geolocation service. Use this when the "
+        "user asks where a specific IP address is located, or asks for "
+        "their own current location (omit the query to geolocate the "
+        "caller's own IP)."
     ),
     parameters=(
         ToolParameter(

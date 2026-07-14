@@ -19,7 +19,7 @@ from dataclasses import dataclass, field
 from typing import TYPE_CHECKING, Any, Optional
 
 from vish_agent.config import MAX_HISTORY_TURNS, MAX_TOOL_RESULT_CONTEXT_CHARS, RESPONSE_TEMPERATURE
-from vish_agent.llm.qwen_client import QwenClient
+from vish_agent.llm.client import LLMClient
 from vish_agent.logging_utils import TransactionLogger, default_logger
 from vish_agent.prompts import CONVERSATION_START_PROMPT
 from vish_agent.tools.base import ToolSpec
@@ -49,7 +49,7 @@ class VishConversationSession:
     def create(
         cls,
         tools: dict[str, ToolSpec] | None = None,
-        llm_client: QwenClient | None = None,
+        llm_client: LLMClient | None = None,
         logger: TransactionLogger = default_logger,
         max_turns: int = MAX_HISTORY_TURNS,
     ) -> tuple["VishConversationSession", "VishPipeline"]:
@@ -64,11 +64,11 @@ class VishConversationSession:
 
     def start_session(
         self,
-        llm_client: QwenClient | None = None,
+        llm_client: LLMClient | None = None,
         tools: dict[str, ToolSpec] | None = None,
     ) -> str:
         """Greet the user and introduce the tools available this session."""
-        llm_client = llm_client or QwenClient.get_shared()
+        llm_client = llm_client or LLMClient.get_shared()
         tools = tools if tools is not None else TOOLBOX
         toolbox_description = ", ".join(tool.name for tool in tools.values())
 

@@ -47,9 +47,9 @@ def make_tool_result(request_id, tool_name, arguments=None, success=True, result
 
 
 @pytest.fixture
-def response_generator(qwen_client, tmp_path):
+def response_generator(llm_client, tmp_path):
     logger = TransactionLogger(tmp_path / "transactions.jsonl")
-    return ResponseGenerator(llm_client=qwen_client, logger=logger), logger.log_path
+    return ResponseGenerator(llm_client=llm_client, logger=logger), logger.log_path
 
 
 def test_generate_returns_final_response_with_text(response_generator):

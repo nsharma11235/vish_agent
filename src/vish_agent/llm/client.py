@@ -1,8 +1,10 @@
-"""Thin wrapper around a locally-loaded Qwen2.5-1.5B-Instruct chat model.
+"""Thin, model-agnostic wrapper around a locally-loaded Hugging Face chat model.
 
-Every layer that needs inference goes through this class rather than touching
-Transformers directly, so the model only has to load once per process and so
-layers stay unit-testable via dependency injection.
+The model is chosen through environment variables (VISH_MODEL_NAME,
+VISH_MODEL_DEVICE — see config.py); any causal LM whose tokenizer provides a
+chat template works. Every layer that needs inference goes through this class
+rather than touching Transformers directly, so the model only has to load once
+per process and so layers stay unit-testable via dependency injection.
 """
 
 from __future__ import annotations
@@ -13,8 +15,8 @@ from typing import Optional
 from vish_agent.config import MODEL_DEVICE, MODEL_LOCAL_FILES_ONLY, MODEL_NAME
 
 
-class QwenClient:
-    _instance: Optional["QwenClient"] = None
+class LLMClient:
+    _instance: Optional["LLMClient"] = None
     _instance_lock = threading.Lock()
 
     def __init__(
@@ -51,7 +53,7 @@ class QwenClient:
             return loader.from_pretrained(model_name, local_files_only=False, **kwargs)
 
     @classmethod
-    def get_shared(cls) -> "QwenClient":
+    def get_shared(cls) -> "LLMClient":
         """Return a process-wide singleton so the model is loaded at most once."""
         with cls._instance_lock:
             if cls._instance is None:

@@ -13,7 +13,7 @@ LOG_DIR.mkdir(parents=True, exist_ok=True)
 MODEL_NAME = os.getenv("VISH_MODEL_NAME", "Qwen/Qwen2.5-1.5B-Instruct")
 MODEL_DEVICE = os.getenv("VISH_MODEL_DEVICE", "auto")
 
-# QwenClient always checks the local Hugging Face cache first and only hits
+# LLMClient always checks the local Hugging Face cache first and only hits
 # the network if nothing is cached yet. Set this to make that a hard
 # requirement: raise instead of silently downloading when the cache is empty.
 MODEL_LOCAL_FILES_ONLY = os.getenv("VISH_MODEL_LOCAL_FILES_ONLY", "false").lower() == "true"

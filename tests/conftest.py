@@ -1,9 +1,9 @@
 import pytest
 
-from vish_agent.llm.qwen_client import QwenClient
+from vish_agent.llm.client import LLMClient
 
 
 @pytest.fixture(scope="session")
-def qwen_client() -> QwenClient:
-    """Load Qwen2.5-1.5B-Instruct once and share it across the whole test session."""
-    return QwenClient.get_shared()
+def llm_client() -> LLMClient:
+    """Load the configured chat model once and share it across the whole test session."""
+    return LLMClient.get_shared()

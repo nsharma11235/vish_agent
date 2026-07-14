@@ -47,9 +47,9 @@ def make_aggregate_input(raw_user_input: str) -> AggregateInput:
 
 
 @pytest.fixture
-def orchestrator(qwen_client, tmp_path):
+def orchestrator(llm_client, tmp_path):
     logger = TransactionLogger(tmp_path / "transactions.jsonl")
-    return Orchestrator(llm_client=qwen_client, logger=logger, tools=SMALL_TOOLBOX), logger.log_path
+    return Orchestrator(llm_client=llm_client, logger=logger, tools=SMALL_TOOLBOX), logger.log_path
 
 
 # --- Pure fuzzy-matching unit tests (no model calls) ---------------------
@@ -129,9 +129,9 @@ def test_select_tool_writes_log_entry(orchestrator):
     assert set(record["data"]["available_tools"]) == set(SMALL_TOOLBOX)
 
 
-def test_orchestrator_respects_injected_toolbox_size(qwen_client, tmp_path):
+def test_orchestrator_respects_injected_toolbox_size(llm_client, tmp_path):
     logger = TransactionLogger(tmp_path / "transactions.jsonl")
-    single_tool_orch = Orchestrator(llm_client=qwen_client, logger=logger, tools={"tavily_web_search": TOOL_A})
+    single_tool_orch = Orchestrator(llm_client=llm_client, logger=logger, tools={"tavily_web_search": TOOL_A})
 
     assert single_tool_orch._format_tool_descriptions() == f"- tavily_web_search: {TOOL_A.description}"
 
