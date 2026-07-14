@@ -5,7 +5,7 @@ import pytest
 from vish_agent.logging_utils import TransactionLogger
 from vish_agent.pipeline import VishPipeline
 from vish_agent.schemas import FinalResponse
-from vish_agent.session import ConversationSession
+from vish_agent.session import VishConversationSession
 from vish_agent.tools.registry import TOOLBOX
 
 
@@ -61,7 +61,7 @@ def test_pipeline_without_session_has_no_cross_turn_memory(pipeline):
 
 def test_pipeline_carries_location_across_turns_in_a_session(pipeline):
     vish, _ = pipeline
-    session = ConversationSession()
+    session = VishConversationSession()
 
     first = vish.run("Can you look up the geolocation for IP address 8.8.8.8?", session=session)
     assert isinstance(first, FinalResponse)

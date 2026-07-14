@@ -1,13 +1,13 @@
-from vish_agent.session import ConversationSession, Turn
+from vish_agent.session import VishConversationSession, Turn
 
 
 def test_context_text_empty_for_fresh_session():
-    session = ConversationSession()
+    session = VishConversationSession()
     assert session.context_text() == ""
 
 
 def test_context_text_formats_dict_tool_result_as_key_value_pairs():
-    session = ConversationSession()
+    session = VishConversationSession()
     session.add_turn(
         Turn(
             user_input="Can you look up the geolocation for IP address 8.8.8.8?",
@@ -27,7 +27,7 @@ def test_context_text_formats_dict_tool_result_as_key_value_pairs():
 
 
 def test_context_text_formats_conversational_turn_without_tool_bracket():
-    session = ConversationSession()
+    session = VishConversationSession()
     session.add_turn(
         Turn(
             user_input="Tell me a joke.",
@@ -45,7 +45,7 @@ def test_context_text_formats_conversational_turn_without_tool_bracket():
 
 
 def test_context_text_marks_failed_tool_calls():
-    session = ConversationSession()
+    session = VishConversationSession()
     session.add_turn(
         Turn(
             user_input="What's the weather like?",
@@ -61,7 +61,7 @@ def test_context_text_marks_failed_tool_calls():
 
 
 def test_context_text_truncates_long_tool_results():
-    session = ConversationSession()
+    session = VishConversationSession()
     long_broadcast = "Saturday: a chance of showers. " * 200  # >> MAX_TOOL_RESULT_CONTEXT_CHARS
     session.add_turn(
         Turn(
@@ -82,7 +82,7 @@ def test_context_text_truncates_long_tool_results():
 
 
 def test_context_text_does_not_truncate_short_dict_results():
-    session = ConversationSession()
+    session = VishConversationSession()
     session.add_turn(
         Turn(
             user_input="Look up 8.8.8.8",
@@ -115,7 +115,7 @@ def test_context_text_does_not_truncate_short_dict_results():
 
 
 def test_add_turn_trims_to_max_turns():
-    session = ConversationSession(max_turns=2)
+    session = VishConversationSession(max_turns=2)
     for i in range(4):
         session.add_turn(
             Turn(user_input=f"turn {i}", tool_name=None, tool_success=False, tool_result=None, response_text=f"reply {i}")

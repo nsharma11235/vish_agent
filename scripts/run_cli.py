@@ -5,13 +5,12 @@ can refer back to earlier ones (e.g. "what's my location?" then "what's the
 weather there?").
 """
 
-from vish_agent.pipeline import VishPipeline
-from vish_agent.session import ConversationSession
+from vish_agent.session import VishConversationSession
 
 
 def main() -> None:
-    pipeline = VishPipeline()
-    session = ConversationSession()
+    session, pipeline = VishConversationSession.create()
+    print(session.start_session())
     print("vish_agent ready. Type a message (Ctrl+C to exit).")
     while True:
         try:
@@ -21,6 +20,9 @@ def main() -> None:
             break
         if not raw_user_input:
             continue
+        if raw_user_input.lower() == "exit":
+            print("Terminating CLI...")
+            break
         response = pipeline.run(raw_user_input, session=session)
         print(response.text)
 

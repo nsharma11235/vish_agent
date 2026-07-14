@@ -52,7 +52,7 @@ def extract_arguments(tool: ToolSpec, current_text: str, combined_text: str) -> 
 TOOL_SPEC = ToolSpec(
     name="tavily_web_search",
     description="Searches the web for a plain text query and returns matching results. "
-     "Use this for informational queries.",
+     "Use this for informational queries including geolocation questions.",
     parameters=(
         ToolParameter(name="query", type=str, required=True, description="The search query."),
         ToolParameter(name="max_results", type=int, required=False, description="Maximum number of results to return."),

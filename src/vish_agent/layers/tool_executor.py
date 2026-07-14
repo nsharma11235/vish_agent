@@ -26,6 +26,7 @@ class ToolExecutor:
         tool_name = selection.matched_tool_name
 
         if tool_name is None:
+            print("    TOOL EXECUTOR: No tool selected, skipping execution.")
             return self._finish(ToolResult(
                 request_id=request_id, tool_name=None, arguments={},
                 success=False, result=None, error="No tool was selected.",
@@ -33,6 +34,7 @@ class ToolExecutor:
 
         tool = self.tools.get(tool_name)
         if tool is None:
+            print(f"    TOOL EXECUTOR: '{tool_name}' matched but is not in the toolbox.")
             return self._finish(ToolResult(
                 request_id=request_id, tool_name=tool_name, arguments={},
                 success=False, result=None, error=f"Unknown tool '{tool_name}'.",
@@ -49,6 +51,7 @@ class ToolExecutor:
             arguments = tool.extract_arguments(tool, current_text, combined_text)
             print(f"    TOOL EXECUTOR: Tool arguments: {arguments}")
         except ArgumentExtractionError as exc:
+            print(f"    TOOL EXECUTOR: Argument extraction failed for '{tool_name}': {exc}")
             return self._finish(ToolResult(
                 request_id=request_id, tool_name=tool_name, arguments={},
                 success=False, result=None, error=str(exc),

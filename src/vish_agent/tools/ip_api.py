@@ -46,6 +46,8 @@ TOOL_SPEC = ToolSpec(
         "address using the IP-API geolocation service. Omit the query to "
         "look up the caller's own public IP. This does not find the coordinates "
         "for a given location. This only finds the coordinates for a given IP address."
+        "Only use this tool if the user asks for the location of a specific IP address"
+        "or the user asks for their current location. Do not use this for other location queries."
     ),
     parameters=(
         ToolParameter(

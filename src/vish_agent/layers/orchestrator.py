@@ -43,6 +43,7 @@ class Orchestrator:
             tool_descriptions=self._format_tool_descriptions(),
             user_input=user_input,
         )
+        print(f"    ORCHESTRATOR: Considering {len(tool_names)} tools: {', '.join(tool_names)}")
         raw_model_output = self.llm_client.chat(
             [{"role": "user", "content": prompt}],
             temperature=ORCHESTRATOR_TEMPERATURE,
@@ -50,6 +51,16 @@ class Orchestrator:
         )
         print(f"    ORCHESTRATOR: Raw tool match output: {raw_model_output}")
         matched_tool_name, match_score = self._match_tool_name(raw_model_output, tool_names)
+        if matched_tool_name is None:
+            print(
+                f"    ORCHESTRATOR: No tool selected (best fuzzy score {match_score} "
+                f"below threshold {self.fuzzy_match_threshold})"
+            )
+        else:
+            print(
+                f"    ORCHESTRATOR: Matched '{raw_model_output.strip()}' -> '{matched_tool_name}' "
+                f"(fuzzy score {match_score}, threshold {self.fuzzy_match_threshold})"
+            )
 
         selection = ToolSelection(
             request_id=aggregate_input.request_id,

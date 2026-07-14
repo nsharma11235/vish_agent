@@ -7,6 +7,11 @@ SYSTEM_PROMPT = (
     "knowledge when possible."
 )
 
+CONVERSATION_START_PROMPT = """Introduce yourself. Mention your name, and that you're able to select tools from your toolbox.\
+Your available tools are {toolbox}.
+"""
+
+
 RESPONSE_TYPE_CLASSIFIER_PROMPT = """Classify the user's message into exactly one category. \
 Reply with only the category word, nothing else.
 

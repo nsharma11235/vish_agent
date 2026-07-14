@@ -15,7 +15,7 @@ from vish_agent.layers.tool_executor import ToolExecutor
 from vish_agent.llm.qwen_client import QwenClient
 from vish_agent.logging_utils import TransactionLogger, default_logger
 from vish_agent.schemas import FinalResponse
-from vish_agent.session import ConversationSession, Turn
+from vish_agent.session import VishConversationSession, Turn
 from vish_agent.tools.base import ToolSpec
 from vish_agent.tools.registry import TOOLBOX
 
@@ -35,8 +35,9 @@ class VishPipeline:
         self.tool_executor = ToolExecutor(logger=logger, tools=tools)
         self.response_generator = ResponseGenerator(llm_client=llm_client, logger=logger)
 
-    def run(self, raw_user_input: str, session: ConversationSession | None = None) -> FinalResponse:
-        conversation_context = session.context_text() if session else ""
+    def run(self, raw_user_input: str, session: VishConversationSession | None = None) -> FinalResponse:
+        # Add to future versions: conversation_context = session.context_text() if session else ""
+        conversation_context = ""
         aggregate_input = self.input_layer.process(raw_user_input, conversation_context=conversation_context)
         print(f"    Request type: {aggregate_input.expected_response_type}")
         tool_selection = self.orchestrator.select_tool(aggregate_input)
