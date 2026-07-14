@@ -1,0 +1,25 @@
+# Local model inference
+# `pip install -r requirements.txt` alone pulls the CPU-only build of torch.
+# For GPU acceleration on an NVIDIA card, install torch separately first from
+# https://pytorch.org/get-started/locally/, e.g.:
+#   pip install torch --index-url https://download.pytorch.org/whl/cu124
+# then run this file (pip will see torch is already satisfied and skip it).
+transformers>=4.46
+torch
+accelerate
+
+# Tool-name fuzzy matching (Orchestrator)
+fuzzywuzzy==0.18.0
+python-Levenshtein
+
+# HTTP tools (IP-API, NWS)
+requests
+
+# Tavily web search tool
+tavily-python
+
+# Config / secrets
+python-dotenv
+
+# Testing
+pytest

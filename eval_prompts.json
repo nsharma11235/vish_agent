@@ -1,0 +1,107 @@
+[
+  {
+    "id": "ip_self",
+    "text": "What's my current IP address's location?",
+    "expected_tools": ["ip_api_geolocation"],
+    "expected_arguments": {},
+    "notes": "No IP in the text; query should be omitted (self lookup)."
+  },
+  {
+    "id": "ip_explicit_google_dns",
+    "text": "Can you look up the geolocation for IP address 8.8.8.8?",
+    "expected_tools": ["ip_api_geolocation"],
+    "expected_arguments": {"query": "8.8.8.8"},
+    "notes": ""
+  },
+  {
+    "id": "ip_explicit_cloudflare_dns",
+    "text": "Where is 1.1.1.1 located?",
+    "expected_tools": ["ip_api_geolocation"],
+    "expected_arguments": {"query": "1.1.1.1"},
+    "notes": ""
+  },
+  {
+    "id": "ip_no_context",
+    "text": "Geolocate this IP: 203.0.113.5",
+    "expected_tools": ["ip_api_geolocation"],
+    "expected_arguments": {"query": "203.0.113.5"},
+    "notes": ""
+  },
+  {
+    "id": "weather_pair_form",
+    "text": "What's the weather radio broadcast for 40.7128, -74.0060?",
+    "expected_tools": ["nws_weather_radio"],
+    "expected_arguments": {"latitude": 40.7128, "longitude": -74.006},
+    "notes": "Coordinates given as a comma-separated pair."
+  },
+  {
+    "id": "weather_keyword_form",
+    "text": "Give me the weather at latitude 47.6062 longitude -122.3321.",
+    "expected_tools": ["nws_weather_radio"],
+    "expected_arguments": {"latitude": 47.6062, "longitude": -122.3321},
+    "notes": "Coordinates given with explicit latitude/longitude keywords."
+  },
+  {
+    "id": "weather_no_coordinates",
+    "text": "What's the weather like today?",
+    "expected_tools": ["nws_weather_radio"],
+    "expected_arguments": null,
+    "notes": "No coordinates in the text; argument extraction is expected to fail. Check tool_execution_success is false rather than arguments_correct."
+  },
+  {
+    "id": "search_basic",
+    "text": "Search the web for the latest developments in fusion energy.",
+    "expected_tools": ["tavily_web_search"],
+    "expected_arguments": {"query": "Search the web for the latest developments in fusion energy."},
+    "notes": ""
+  },
+  {
+    "id": "search_max_results",
+    "text": "Search the web for octopus facts, give me 5 results.",
+    "expected_tools": ["tavily_web_search"],
+    "expected_arguments": {"query": "Search the web for octopus facts, give me 5 results.", "max_results": 5},
+    "notes": ""
+  },
+  {
+    "id": "search_news_headlines",
+    "text": "Find me today's top news headlines online.",
+    "expected_tools": ["tavily_web_search"],
+    "expected_arguments": {"query": "Find me today's top news headlines online."},
+    "notes": ""
+  },
+  {
+    "id": "search_spacex",
+    "text": "Look up recent news about SpaceX launches.",
+    "expected_tools": ["tavily_web_search"],
+    "expected_arguments": {"query": "Look up recent news about SpaceX launches."},
+    "notes": ""
+  },
+  {
+    "id": "conversational_joke",
+    "text": "Tell me a joke.",
+    "expected_tools": [],
+    "expected_arguments": null,
+    "notes": "No live/external data needed; no tool should be selected."
+  },
+  {
+    "id": "conversational_capital",
+    "text": "What's the capital of France?",
+    "expected_tools": [],
+    "expected_arguments": null,
+    "notes": "Answerable from general knowledge; no tool should be selected."
+  },
+  {
+    "id": "conversational_arithmetic",
+    "text": "What is 12 times 7?",
+    "expected_tools": [],
+    "expected_arguments": null,
+    "notes": "Answerable from general knowledge; no tool should be selected."
+  },
+  {
+    "id": "ambiguous_ip_and_weather",
+    "text": "I'm curious about the weather near my IP address 8.8.8.8.",
+    "expected_tools": ["ip_api_geolocation", "nws_weather_radio"],
+    "expected_arguments": null,
+    "notes": "Genuinely ambiguous: either tool is a defensible first step. Multiple acceptable tools; arguments not graded."
+  }
+]
